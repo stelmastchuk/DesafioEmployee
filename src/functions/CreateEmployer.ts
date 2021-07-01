@@ -1,29 +1,21 @@
-import "reflect-metadata";
+import { ICreateEmployeeDTO } from "@repositories/DTO/ICreateEmployeeDTO";
+import { EmployeeRepository } from "@repositories/Repository/EmployeeRepository";
 import { CreateEmployerUseCase } from "src/UseCases/CreateEmployerUseCase";
-import { container } from "tsyringe";
-
-
-interface IRequest {
-    office: string;
-    name: string;
-    age: string;
-}
-
-
-
 
 export const handle = async (event) => {
 
-    const { office, name, age } = JSON.parse(event.body) as IRequest
+    const { office, employerName, age } = JSON.parse(event.body) as ICreateEmployeeDTO
 
-    const createEmployerUseCase = container.resolve(CreateEmployerUseCase)
+    const employeeRepository = new EmployeeRepository();
+    const createEmployerUseCase = new CreateEmployerUseCase(employeeRepository);
 
-    createEmployerUseCase.execute({ office, name, age });
-
+    await createEmployerUseCase.execute({ office, employerName, age });
 
     return {
         statusCode: 201,
-        body: JSON.stringify({ message: "Employeer Created!" }),
+        body: JSON.stringify({ message: "Employer Created!" }),
         headers: { "Content-type": "application/json" },
     }
+
+
 };

@@ -32,7 +32,54 @@ functions:
           path: /createEmployer
           method: POST
           cors: true
-
+  UpdateEmployer:
+    handler: src/functions/UpdateEmployer.handle     
+    events:
+      - http:
+          path: /updateEmployer/{id}
+          method: PUT
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                foo: true
+              paths:
+                bar: true          
+  DeleteEmployer:
+    handler: src/functions/DeleteEmployer.handle     
+    events:
+      - http:
+          path: /deleteEmployer/{id}
+          method: DELETE
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                foo: true
+              paths:
+                bar: true
+  ListEmployer:
+    handler: src/functions/ListEmployer.handle     
+    events:
+      - http:
+          path: /listEmployer/{id}
+          method: GET
+          cors: true
+          request:
+            parameters:
+              querystrings:
+                foo: true
+              paths:
+                bar: true                            
+  ListAllEmployer:
+    handler: src/functions/ListAllEmployers.handle     
+    events:
+      - http:
+          path: /listallEmployer
+          method: GET
+          cors: true
+          
+                
 resources:
   Resources:
     dbEmployee:

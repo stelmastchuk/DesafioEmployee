@@ -4,11 +4,13 @@ class Employer {
 
     id: string;
     age: string;
-    name: string
+    employerName: string
     office: string
 
     constructor() {
-        this.id = uuidv4();
+        if (!this.id) {
+            this.id = uuidv4();
+        }
     }
 
 }

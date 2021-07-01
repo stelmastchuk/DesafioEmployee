@@ -7,7 +7,7 @@
     "dev": "serverless offline",
     "deploy": "sls deploy -v",
     "dynamo:start": "serverless dynamodb start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -23,13 +23,16 @@
   "devDependencies": {
     "@serverless/typescript": "^2.23.0",
     "@types/aws-lambda": "^8.10.71",
+    "@types/jest": "^26.0.23",
     "@types/node": "^14.14.25",
     "@types/uuid": "^8.3.0",
+    "jest": "^27.0.6",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^2.23.0",
     "serverless-dynamodb-local": "^0.2.40",
     "serverless-offline": "^7.0.0",
     "serverless-webpack": "^5.3.5",
+    "ts-jest": "^27.0.3",
     "ts-loader": "^8.0.15",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",

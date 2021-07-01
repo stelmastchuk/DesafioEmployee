@@ -2,8 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"]
+      "@functions/*": [
+        "src/functions/*"
+      ],
+      "@libs/*": [
+        "src/libs/*"
+      ],
+      "@repositories/*": [
+        "src/repositories/*"
+      ]
     }
   }
 }

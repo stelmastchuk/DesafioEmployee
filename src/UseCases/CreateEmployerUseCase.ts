@@ -1,25 +1,25 @@
-import { inject, injectable } from "tsyringe";
+import { ICreateEmployeeDTO } from "@repositories/DTO/ICreateEmployeeDTO";
+import type { IEmployeeRepository } from "src/repositories/Repository/IEmployeeRepository";
 
-import { IEmployeeRepository } from "../repositories/IEmployeeRepository";
 
-interface IRequest {
-    office: string;
-    name: string;
-    age: string;
-}
-
-@injectable()
 class CreateEmployerUseCase {
 
-    constructor(
-        @inject("EmployeeRepository")
-        private employeeRepository: IEmployeeRepository) { }
+    private employeeRepository: IEmployeeRepository
 
-    async execute({ office, name, age }: IRequest): Promise<void> {
+    constructor(employeeRepository: IEmployeeRepository) {
 
-        await this.employeeRepository.create({ office, name, age });
+        this.employeeRepository = employeeRepository;
 
     }
+
+    async execute({ id, office, employerName, age }: ICreateEmployeeDTO): Promise<any> {
+
+        const employee = await this.employeeRepository.create({ office, employerName, age, id });
+
+        return employee;
+    }
+
+
 
 
 }
