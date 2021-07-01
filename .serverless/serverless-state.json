@@ -8,6 +8,15 @@
       "name": "aws",
       "runtime": "nodejs14.x",
       "region": "sa-east-1",
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:*"
+          ],
+          "Resource": "*"
+        }
+      ],
       "stage": "dev",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
@@ -83,10 +92,34 @@
               }
             }
           },
-          "HelloLogGroup": {
+          "CreateEmployerLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/employeeRegistration-dev-hello"
+              "LogGroupName": "/aws/lambda/employeeRegistration-dev-CreateEmployer"
+            }
+          },
+          "UpdateEmployerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/employeeRegistration-dev-UpdateEmployer"
+            }
+          },
+          "DeleteEmployerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/employeeRegistration-dev-DeleteEmployer"
+            }
+          },
+          "ListEmployerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/employeeRegistration-dev-ListEmployer"
+            }
+          },
+          "ListAllEmployerLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/employeeRegistration-dev-ListAllEmployer"
             }
           },
           "IamRoleLambdaExecution": {
@@ -145,6 +178,9 @@
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/employeeRegistration-dev*:*:*"
                           }
                         ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
                       }
                     ]
                   }
@@ -166,18 +202,18 @@
               }
             }
           },
-          "HelloLambdaFunction": {
+          "CreateEmployerLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/employeeRegistration/dev/1625069724409-2021-06-30T16:15:24.409Z/employeeRegistration.zip"
+                "S3Key": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z/employeeRegistration.zip"
               },
-              "Handler": "src/functions/hello.handle",
+              "Handler": "src/functions/CreateEmployer.handle",
               "Runtime": "nodejs14.x",
-              "FunctionName": "employeeRegistration-dev-hello",
+              "FunctionName": "employeeRegistration-dev-CreateEmployer",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -188,17 +224,157 @@
               }
             },
             "DependsOn": [
-              "HelloLogGroup"
+              "CreateEmployerLogGroup"
             ]
           },
-          "HelloLambdaVersionlC3XBjT4agBMMNssnVTtWbCFalIYZia1Dy2m3TWnMaE": {
+          "UpdateEmployerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z/employeeRegistration.zip"
+              },
+              "Handler": "src/functions/UpdateEmployer.handle",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "employeeRegistration-dev-UpdateEmployer",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "UpdateEmployerLogGroup"
+            ]
+          },
+          "DeleteEmployerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z/employeeRegistration.zip"
+              },
+              "Handler": "src/functions/DeleteEmployer.handle",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "employeeRegistration-dev-DeleteEmployer",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "DeleteEmployerLogGroup"
+            ]
+          },
+          "ListEmployerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z/employeeRegistration.zip"
+              },
+              "Handler": "src/functions/ListEmployer.handle",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "employeeRegistration-dev-ListEmployer",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ListEmployerLogGroup"
+            ]
+          },
+          "ListAllEmployerLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z/employeeRegistration.zip"
+              },
+              "Handler": "src/functions/ListAllEmployers.handle",
+              "Runtime": "nodejs14.x",
+              "FunctionName": "employeeRegistration-dev-ListAllEmployer",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "ListAllEmployerLogGroup"
+            ]
+          },
+          "CreateEmployerLambdaVersion1IplGtuWU4Fd3scVTrXVLjtmsJvz5RMneqMY8gjE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "HelloLambdaFunction"
+                "Ref": "CreateEmployerLambdaFunction"
               },
-              "CodeSha256": "UAObIiqpUETU5JIla5esUsLs86p3QEb9YePx38HC7Eg="
+              "CodeSha256": "/X7G3i2pQxFXrh79BE+qsKjJ/HaMPKEUKI15EP8vkfs="
+            }
+          },
+          "UpdateEmployerLambdaVersion9xgw8QSLzQtuYMvYclZSIGXh5rPQM5s6ZoeGEfsoSA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "UpdateEmployerLambdaFunction"
+              },
+              "CodeSha256": "/X7G3i2pQxFXrh79BE+qsKjJ/HaMPKEUKI15EP8vkfs="
+            }
+          },
+          "ListEmployerLambdaVersionxcofdPJRCfPvWXJlzGReYZgJWJMhxIbbG647AmaFw3o": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListEmployerLambdaFunction"
+              },
+              "CodeSha256": "/X7G3i2pQxFXrh79BE+qsKjJ/HaMPKEUKI15EP8vkfs="
+            }
+          },
+          "DeleteEmployerLambdaVersionv1CpKPUyuclQHwaerNLjhDrya0S9SD0RYWDBy1RA": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "DeleteEmployerLambdaFunction"
+              },
+              "CodeSha256": "/X7G3i2pQxFXrh79BE+qsKjJ/HaMPKEUKI15EP8vkfs="
+            }
+          },
+          "ListAllEmployerLambdaVersionMi1SAaHVSiVqFPQN0cJeyXhK4U1RfEW2CxogQv80": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ListAllEmployerLambdaFunction"
+              },
+              "CodeSha256": "/X7G3i2pQxFXrh79BE+qsKjJ/HaMPKEUKI15EP8vkfs="
             }
           },
           "ApiGatewayRestApi": {
@@ -213,7 +389,7 @@
               "Policy": ""
             }
           },
-          "ApiGatewayResourceHello": {
+          "ApiGatewayResourceCreateemployer": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
@@ -222,13 +398,244 @@
                   "RootResourceId"
                 ]
               },
-              "PathPart": "hello",
+              "PathPart": "createEmployer",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
             }
           },
-          "ApiGatewayMethodHelloOptions": {
+          "ApiGatewayResourceUpdateemployer": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "updateEmployer",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceUpdateemployerIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceUpdateemployer"
+              },
+              "PathPart": "{id}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDeleteemployer": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "deleteEmployer",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceDeleteemployerIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceDeleteemployer"
+              },
+              "PathPart": "{id}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceListemployer": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "listEmployer",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceListemployerIdVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceListemployer"
+              },
+              "PathPart": "{id}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceListallemployer": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "listallEmployer",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodCreateemployerOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,POST'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceCreateemployer"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodUpdateemployerIdVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,PUT'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceUpdateemployerIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodDeleteemployerIdVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDeleteemployerIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodListemployerIdVarOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -266,20 +673,65 @@
                 ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHello"
+                "Ref": "ApiGatewayResourceListemployerIdVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
             }
           },
-          "ApiGatewayMethodHelloGet": {
+          "ApiGatewayMethodListallemployerOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
-              "HttpMethod": "GET",
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceListallemployer"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodCreateemployerPost": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "POST",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHello"
+                "Ref": "ApiGatewayResourceCreateemployer"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -304,7 +756,7 @@
                       ":lambda:path/2015-03-31/functions/",
                       {
                         "Fn::GetAtt": [
-                          "HelloLambdaFunction",
+                          "CreateEmployerLambdaFunction",
                           "Arn"
                         ]
                       },
@@ -316,10 +768,203 @@
               "MethodResponses": []
             },
             "DependsOn": [
-              "HelloLambdaPermissionApiGateway"
+              "CreateEmployerLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayDeployment1625069721572": {
+          "ApiGatewayMethodUpdateemployerIdVarPut": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "PUT",
+              "RequestParameters": {
+                "method.request.querystring.foo": true,
+                "method.request.path.bar": true
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceUpdateemployerIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "UpdateEmployerLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "UpdateEmployerLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodDeleteemployerIdVarDelete": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "DELETE",
+              "RequestParameters": {
+                "method.request.querystring.foo": true,
+                "method.request.path.bar": true
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceDeleteemployerIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "DeleteEmployerLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "DeleteEmployerLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodListemployerIdVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {
+                "method.request.querystring.foo": true,
+                "method.request.path.bar": true
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceListemployerIdVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListEmployerLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "ListEmployerLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodListallemployerGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceListallemployer"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "ListAllEmployerLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            },
+            "DependsOn": [
+              "ListAllEmployerLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayDeployment1625158799112": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -328,16 +973,24 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodHelloOptions",
-              "ApiGatewayMethodHelloGet"
+              "ApiGatewayMethodCreateemployerOptions",
+              "ApiGatewayMethodUpdateemployerIdVarOptions",
+              "ApiGatewayMethodDeleteemployerIdVarOptions",
+              "ApiGatewayMethodListemployerIdVarOptions",
+              "ApiGatewayMethodListallemployerOptions",
+              "ApiGatewayMethodCreateemployerPost",
+              "ApiGatewayMethodUpdateemployerIdVarPut",
+              "ApiGatewayMethodDeleteemployerIdVarDelete",
+              "ApiGatewayMethodListemployerIdVarGet",
+              "ApiGatewayMethodListallemployerGet"
             ]
           },
-          "HelloLambdaPermissionApiGateway": {
+          "CreateEmployerLambdaPermissionApiGateway": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "HelloLambdaFunction",
+                  "CreateEmployerLambdaFunction",
                   "Arn"
                 ]
               },
@@ -368,6 +1021,176 @@
                 ]
               }
             }
+          },
+          "UpdateEmployerLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "UpdateEmployerLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "DeleteEmployerLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "DeleteEmployerLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListEmployerLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListEmployerLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "ListAllEmployerLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "ListAllEmployerLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "dbEmployee": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "Employeers",
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 5,
+                "WriteCapacityUnits": 5
+              },
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ]
+            }
           }
         },
         "Outputs": {
@@ -379,13 +1202,49 @@
               "Name": "sls-employeeRegistration-dev-ServerlessDeploymentBucketName"
             }
           },
-          "HelloLambdaFunctionQualifiedArn": {
+          "CreateEmployerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionlC3XBjT4agBMMNssnVTtWbCFalIYZia1Dy2m3TWnMaE"
+              "Ref": "CreateEmployerLambdaVersion1IplGtuWU4Fd3scVTrXVLjtmsJvz5RMneqMY8gjE"
             },
             "Export": {
-              "Name": "sls-employeeRegistration-dev-HelloLambdaFunctionQualifiedArn"
+              "Name": "sls-employeeRegistration-dev-CreateEmployerLambdaFunctionQualifiedArn"
+            }
+          },
+          "UpdateEmployerLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "UpdateEmployerLambdaVersion9xgw8QSLzQtuYMvYclZSIGXh5rPQM5s6ZoeGEfsoSA"
+            },
+            "Export": {
+              "Name": "sls-employeeRegistration-dev-UpdateEmployerLambdaFunctionQualifiedArn"
+            }
+          },
+          "ListEmployerLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListEmployerLambdaVersionxcofdPJRCfPvWXJlzGReYZgJWJMhxIbbG647AmaFw3o"
+            },
+            "Export": {
+              "Name": "sls-employeeRegistration-dev-ListEmployerLambdaFunctionQualifiedArn"
+            }
+          },
+          "DeleteEmployerLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "DeleteEmployerLambdaVersionv1CpKPUyuclQHwaerNLjhDrya0S9SD0RYWDBy1RA"
+            },
+            "Export": {
+              "Name": "sls-employeeRegistration-dev-DeleteEmployerLambdaFunctionQualifiedArn"
+            }
+          },
+          "ListAllEmployerLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ListAllEmployerLambdaVersionMi1SAaHVSiVqFPQN0cJeyXhK4U1RfEW2CxogQv80"
+            },
+            "Export": {
+              "Name": "sls-employeeRegistration-dev-ListAllEmployerLambdaFunctionQualifiedArn"
             }
           },
           "ServiceEndpoint": {
@@ -504,20 +1363,246 @@
       "webpack": {
         "webpackConfig": "./webpack.config.js",
         "includeModules": true
+      },
+      "dynamodb": {
+        "stages": [
+          "dev",
+          "local"
+        ],
+        "start": {
+          "port": 8000,
+          "inMemory": true,
+          "migrate": true
+        }
       }
     },
     "plugins": [
       "serverless-offline",
-      "serverless-webpack"
+      "serverless-webpack",
+      "serverless-dynamodb-local"
     ],
     "pluginsData": {},
     "functions": {
-      "hello": {
-        "handler": "src/functions/hello.handle",
+      "CreateEmployer": {
+        "handler": "src/functions/CreateEmployer.handle",
         "events": [
           {
             "http": {
-              "path": "hello",
+              "path": "createEmployer",
+              "method": "post",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "POST"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:PutItem"
+            ],
+            "Resource": "arn:aws:dynamodb:${self.provider.region}:*:table/Employeers"
+          }
+        ],
+        "name": "employeeRegistration-dev-CreateEmployer",
+        "package": {
+          "artifact": ".serverless\\employeeRegistration.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "CreateEmployerLambdaVersion1IplGtuWU4Fd3scVTrXVLjtmsJvz5RMneqMY8gjE"
+      },
+      "UpdateEmployer": {
+        "handler": "src/functions/UpdateEmployer.handle",
+        "events": [
+          {
+            "http": {
+              "path": "updateEmployer/{id}",
+              "method": "put",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "PUT"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.foo": true,
+                  "method.request.path.bar": true
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:UpdateItem"
+            ],
+            "Resource": "arn:aws:dynamodb:${self.provider.region}:*:table/Employeers"
+          }
+        ],
+        "name": "employeeRegistration-dev-UpdateEmployer",
+        "package": {
+          "artifact": ".serverless\\employeeRegistration.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "UpdateEmployerLambdaVersion9xgw8QSLzQtuYMvYclZSIGXh5rPQM5s6ZoeGEfsoSA"
+      },
+      "DeleteEmployer": {
+        "handler": "src/functions/DeleteEmployer.handle",
+        "events": [
+          {
+            "http": {
+              "path": "deleteEmployer/{id}",
+              "method": "delete",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "DELETE"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.foo": true,
+                  "method.request.path.bar": true
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:DeleteItem"
+            ],
+            "Resource": "arn:aws:dynamodb:${self.provider.region}:*:table/Employeers"
+          }
+        ],
+        "name": "employeeRegistration-dev-DeleteEmployer",
+        "package": {
+          "artifact": ".serverless\\employeeRegistration.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "DeleteEmployerLambdaVersionv1CpKPUyuclQHwaerNLjhDrya0S9SD0RYWDBy1RA"
+      },
+      "ListEmployer": {
+        "handler": "src/functions/ListEmployer.handle",
+        "events": [
+          {
+            "http": {
+              "path": "listEmployer/{id}",
+              "method": "get",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "request": {
+                "parameters": {
+                  "method.request.querystring.foo": true,
+                  "method.request.path.bar": true
+                }
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:GetItem"
+            ],
+            "Resource": "arn:aws:dynamodb:${self.provider.region}:*:table/Employeers"
+          }
+        ],
+        "name": "employeeRegistration-dev-ListEmployer",
+        "package": {
+          "artifact": ".serverless\\employeeRegistration.zip"
+        },
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs14.x",
+        "vpc": {},
+        "versionLogicalId": "ListEmployerLambdaVersionxcofdPJRCfPvWXJlzGReYZgJWJMhxIbbG647AmaFw3o"
+      },
+      "ListAllEmployer": {
+        "handler": "src/functions/ListAllEmployers.handle",
+        "events": [
+          {
+            "http": {
+              "path": "listallEmployer",
               "method": "get",
               "cors": {
                 "origins": [
@@ -542,7 +1627,16 @@
             }
           }
         ],
-        "name": "employeeRegistration-dev-hello",
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:Scan"
+            ],
+            "Resource": "arn:aws:dynamodb:${self.provider.region}:*:table/Employeers"
+          }
+        ],
+        "name": "employeeRegistration-dev-ListAllEmployer",
         "package": {
           "artifact": ".serverless\\employeeRegistration.zip"
         },
@@ -550,8 +1644,35 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionlC3XBjT4agBMMNssnVTtWbCFalIYZia1Dy2m3TWnMaE"
+        "versionLogicalId": "ListAllEmployerLambdaVersionMi1SAaHVSiVqFPQN0cJeyXhK4U1RfEW2CxogQv80"
       }
+    },
+    "resources": {
+      "Resources": {
+        "dbEmployee": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "Employeers",
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 5,
+              "WriteCapacityUnits": 5
+            },
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+              }
+            ]
+          }
+        }
+      },
+      "Outputs": {}
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -570,13 +1691,16 @@
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
       }
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/employeeRegistration/dev/1625069724409-2021-06-30T16:15:24.409Z",
+    "artifactDirectoryName": "serverless/employeeRegistration/dev/1625158810532-2021-07-01T17:00:10.532Z",
     "artifact": ""
   }
 }
