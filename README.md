@@ -1,9 +1,4 @@
-# Serverless - AWS Node.js Typescript
 
-This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).
-
-
-Template do projeto gerado pelo Serverless "aws-nodejs-typescript"
 
 Implementacao:
 
@@ -19,9 +14,13 @@ Implementacao:
 Lista paths para as functions lambda :
 
   POST - https://wbhfm9gdsk.execute-api.sa-east-1.amazonaws.com/dev/createEmployer
+  
   PUT - https://wbhfm9gdsk.execute-api.sa-east-1.amazonaws.com/dev/updateEmployer/{id}
+  
   DELETE - https://wbhfm9gdsk.execute-api.sa-east-1.amazonaws.com/dev/deleteEmployer/{id}
+  
   GET - https://wbhfm9gdsk.execute-api.sa-east-1.amazonaws.com/dev/listEmployer/{id}
+  
   GET - https://wbhfm9gdsk.execute-api.sa-east-1.amazonaws.com/dev/listallEmployer
 
 
